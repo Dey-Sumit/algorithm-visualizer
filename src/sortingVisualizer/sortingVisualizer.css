@@ -1,0 +1,20 @@
+.sorting-visualizer-container {
+    text-align: center;
+}
+
+.array-container {
+    background-color: #353535;
+    padding: 40px 0px;
+    height: 500px;
+    /* margin: 40px auto; */
+    width: 95%;
+    margin: 10px auto;
+    text-align: center;
+}
+
+.array-bar {
+    width: 3px;
+    background-color: red;
+    display: inline-block;
+    margin: 0 2px;
+}
