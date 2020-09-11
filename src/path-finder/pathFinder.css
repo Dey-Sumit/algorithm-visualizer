@@ -1,0 +1,39 @@
+.pathFinder {
+    width: 100%;
+}
+
+.pathFinder__container {
+    display: flex;
+}
+
+.pathFinder__grid {
+    flex: 0.8;
+
+    background-color: transparent;
+    padding: 20px 0px;
+    height: 460px;
+    margin: 10px 5px;
+    text-align: center;
+}
+
+.pathFinder__articles {
+    flex: 0.2;
+}
+
+.grid {
+    width: fit-content;
+    margin: 20px auto;
+}
+
+.grid__row {
+    display: flex;
+    justify-content: center;
+}
+
+.pathFinder__navbar {
+    padding: 10px;
+}
+
+.pathFinder__navbar button {
+    background: var(--green);
+}

@@ -20,7 +20,7 @@ const bubbleSort = (unsortedArray, high, animations) => {
     return unsortedArray
 }
 
-export const bubbleSort_helper = (array) => {
+export const bubbleSort_util = (array) => {
     const animations = []
     array = bubbleSort(array, array.length - 1, animations)
     return animations

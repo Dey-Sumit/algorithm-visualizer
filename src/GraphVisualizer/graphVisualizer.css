@@ -1,8 +1,0 @@
-.grid {
-    width: fit-content;
-    margin: 20px auto;
-}
-
-.grid__row {
-    display: flex;
-}

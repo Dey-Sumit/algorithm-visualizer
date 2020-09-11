@@ -1,13 +1,29 @@
 import React from 'react';
-import SortingVisualizer from './sortingVisualizer/sortingVisualizer.jsx'
-import GraphVisualizer from './GraphVisualizer/GraphVisualizer.js';
-
+import Sidebar from './sidebar/Sidebar'
+import './App.css';
+import Landing from './landing/Landing';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import Sorting from './sorting/Sorting';
+import PathFinder from './path-finder/PathFinder';
 function App() {
   return (
-    <div className="App">
-      {/* <SortingVisualizer /> */}
-      <GraphVisualizer />
-    </div>
+    <Router>
+      <div className="app">
+        <Sidebar />
+        <Switch>
+          <Route path="/sorting">
+            <Sorting />
+          </Route>
+          <Route path="/path-finder">
+            <PathFinder />
+          </Route>
+          <Route path="/">
+            <Landing />
+          </Route>
+        </Switch>
+
+      </div>
+    </Router>
   );
 }
 

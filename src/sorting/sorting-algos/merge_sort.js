@@ -1,11 +1,11 @@
-//advance merge sort using auxulary array
+//advance merge sort using auxiliary array
 
-// aux array is exact copy of the unsorted array ; we will pock the value from aux array 
-// and reorganise main_unsorted_array
+// aux array is exact copy of the unsorted array ; 
+//unpack the value from aux array and reorganize main_unsorted_array
 const merge = (main_array, aux_array, low, mid, high, animations) => {
 
     let i = low //traverse the left part
-    let j = mid + 1 // traverse the righ part
+    let j = mid + 1 // traverse the right part
     let k = low //index of aux_array 
 
     while (i <= mid && j <= high) {
@@ -31,11 +31,8 @@ const merge = (main_array, aux_array, low, mid, high, animations) => {
             animations.push([k, aux_array[j]])
 
             main_array[k++] = aux_array[j++]
-
         }
-
     }
-    //console.log("---main_array", main_array);
 
     while (i <= mid) {
         // These are the values that we're comparing; we push them once
@@ -63,10 +60,7 @@ const merge = (main_array, aux_array, low, mid, high, animations) => {
 
         main_array[k++] = aux_array[j++]
     }
-    // console.log("exit, main_array", main_array);
     return main_array
-
-
 }
 
 const mergeSort = (array, aux_array, low, high, animations) => {
@@ -84,12 +78,11 @@ export const mergeSort_util = (unsorted_array) => {
     if (unsorted_array.length <= 1)
         return unsorted_array
 
+    // duplicate the array
     const aux_array = unsorted_array.slice()
 
     mergeSort(unsorted_array, aux_array, 0, unsorted_array.length - 1, animations)
-    // console.log(unsorted_array);
-    // console.log(animations);
+    // arrays are mutable so mergeSort() overwrites animation array;so return animations array 
+
     return animations
-
-
 }

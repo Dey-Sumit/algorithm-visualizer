@@ -1,0 +1,49 @@
+.sidebar {
+    width: 8vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    justify-content: space-around;
+    font-size: 28px;
+    color: var(--orange);
+    box-shadow: -1px -1px 3px rgba(255, 255, 255, 0.1), 1px 1px 3px rgba(0, 0, 0, 0.8);
+}
+
+.sidebar>ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    height: 150px;
+    justify-content: space-between;
+}
+
+.sidebar__link-active {
+    color: var(--blue);
+
+}
+
+.fa {
+    box-shadow: -1px -1px 3px rgba(255, 255, 255, 0.1),
+        1px 1px 3px rgba(0, 0, 0, 0.8);
+    padding: 12px;
+    border-radius: 50%;
+    margin: 8px 0;
+}
+
+.sidebar__social>i {
+    border-radius: 10%;
+    color: var(--white);
+}
+
+.fa-rocket {
+    color: var(--pink);
+}
+
+.fa-home {
+    color: var(--violet);
+}
+
+.fa-bomb {
+    color: var(--green);
+}
