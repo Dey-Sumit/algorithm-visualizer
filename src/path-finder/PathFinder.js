@@ -6,10 +6,10 @@ import { aStar } from './pathFinder-algos/aStar';
 import { bfs } from './pathFinder-algos/bfs';
 import { dfs } from './pathFinder-algos/dfs';
 import { motion } from 'framer-motion'
-const ROWS = 15
-const COLS = 25
+const ROWS = 12
+const COLS = 12
 var START_NODE_ROW = 2
-var START_NODE_COL = 14
+var START_NODE_COL = 10
 var END_NODE_ROW = 7
 var END_NODE_COL = 2
 

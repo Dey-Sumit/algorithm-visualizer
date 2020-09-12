@@ -17,17 +17,18 @@ const Sidebar = () => {
 
                 <Link to="/path-finder">
                     <li className="sidebar__link-active">
-                        <i class="fa fa-bomb"></i>
+                        <i class="fa fa-search-location"></i>
                     </li>
                 </Link>
 
-                <li><i class="fa fa-rocket"></i>
+                <li>
+                    <i class="fa fa-rocket"></i>
                 </li>
 
             </ul>
 
             <div className="sidebar__social">
-                <i class="fa fa-github"></i>
+                <i class="fab fa-github-alt"></i>
             </div>
         </div>
     );

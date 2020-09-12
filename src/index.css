@@ -39,6 +39,8 @@ button {
     1px 1px 3px rgba(0, 0, 0, 0.8);
   border-radius: 10px;
   cursor: pointer;
+  width: 18%;
+  min-width: 130px;
 }
 
 .alert {
@@ -46,4 +48,11 @@ button {
   padding: 1%;
   margin: 1%;
   border-radius: 5px;
+}
+
+@media (max-width:1160px) {
+  .app {
+    flex-direction: column;
+  }
+
 }
