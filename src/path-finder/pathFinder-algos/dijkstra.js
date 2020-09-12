@@ -1,5 +1,5 @@
 export const dijkstra = (grid, startNode, endNode) => {
-
+    console.log(startNode, endNode);
     if (startNode === endNode)
         return false
 

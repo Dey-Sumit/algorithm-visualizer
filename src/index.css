@@ -34,9 +34,16 @@ button {
   border: none;
   outline: none;
   font-size: 16px;
-  color: var(--white);
+  background-color: transparent;
   box-shadow: -1px -1px 3px rgba(255, 255, 255, 0.1),
     1px 1px 3px rgba(0, 0, 0, 0.8);
   border-radius: 10px;
   cursor: pointer;
+}
+
+.alert {
+  background-color: var(--pink);
+  padding: 1%;
+  margin: 1%;
+  border-radius: 5px;
 }

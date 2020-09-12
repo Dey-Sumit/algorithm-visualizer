@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-
+import { motion } from 'framer-motion'
 import './sorting.css'
 import { mergeSort_util } from './sorting-algos/merge_sort';
 import { bubbleSort_util } from './sorting-algos/bubble_sort';
@@ -94,16 +94,38 @@ const Sorting = () => {
 
 
     }
+    const sorting_variants = {
+        hidden: {
+            opacity: 0
+        },
+        visible: {
+            opacity: 1,
+            transition: {
+                delay: 0.2, duration: 0.6,
+            }
+        },
+        exit: {
+            opacity: 0,
+            transition: {
+                ease: 'easeInOut'
+            }
+        }
+    }
+
 
     return (
-        <div className="sorting">
+        <motion.div className="sorting"
+            variants={sorting_variants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+        >
             <div className="sorting__navbar">
                 <div className="util__buttons">
                     <button onClick={() => resetArray(DEFAULT_SIZE)}>Reset </button>
-                    <button>Array Size </button>
                     <button>Start Timer</button>
                 </div>
-                <div className="sorting__types">
+                <div className="sorting-types__buttons">
                     <button onClick={() => bubbleSort_animation()}>Bubble Sort</button>
                     <button onClick={() => mergeSort_animation()}>Merge Sort</button>
                     <button>Quick Sort</button>
@@ -111,7 +133,7 @@ const Sorting = () => {
                     <button>Selection Sort</button>
                     <button>Heap Sort</button>
                 </div>
-                <input type="range" min="30" max="85" step="1"
+                <input type="range" min="30" max="70" step="1"
                     value={arraySize}
                     onChange={(e) => {
                         setArraySize(e.target.value)
@@ -129,12 +151,9 @@ const Sorting = () => {
                         </div>
                     )}
                 </div>
-                <div className="sorting__articles">
-                    do something
-                </div>
             </div>
 
-        </div>
+        </motion.div>
     );
 };
 

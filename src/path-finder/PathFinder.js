@@ -2,18 +2,29 @@ import React, { useEffect, useState } from 'react';
 import Node from './node/Node';
 import './pathFinder.css'
 import { getNodesInShortestPathOrder, dijkstra } from './pathFinder-algos/dijkstra';
-
+import { aStar } from './pathFinder-algos/aStar';
+import { bfs } from './pathFinder-algos/bfs';
+import { dfs } from './pathFinder-algos/dfs';
+import { motion } from 'framer-motion'
 const ROWS = 15
 const COLS = 25
-const START_NODE_ROW = 2
-const START_NODE_COL = 14
-const END_NODE_ROW = 7
-const END_NODE_COL = 2
+var START_NODE_ROW = 2
+var START_NODE_COL = 14
+var END_NODE_ROW = 7
+var END_NODE_COL = 2
+
+var PREV_START_NODE_ROW = 2;
+var PREV_START_NODE_COL = 14;
+var PREV_END_NODE_ROW = 7;
+var PREV_END_NODE_COL = 2;
+
 
 const PathFinder = () => {
+
     const [mainGrid, setMainGrid] = useState([])
     const [mouseIsPressed, setMouseIsPressed] = useState(false)
-
+    const [isStartNode, setIsStartNode] = useState(false);
+    const [isEndNode, setIsEndNode] = useState(false);
     const createNode = (row, col) => {
         return {
             row,
@@ -31,8 +42,8 @@ const PathFinder = () => {
         }
     }
 
+
     const createInitialGrid = () => {
-        console.log("called");
 
         var temp_grid = []
         for (let row = 0; row < ROWS; row++) {
@@ -46,17 +57,45 @@ const PathFinder = () => {
     }
 
     const handleMouseUp = () => {
+        console.log("mouseup");
         setMouseIsPressed(false)
+        setIsStartNode(false)
+        setIsEndNode(false)
     }
 
     const handleMouseDown = (row, col) => {
+        console.log("mouse down");
+        // check if the element to be dragged is a start or end node
+        if (row === PREV_START_NODE_ROW && col === PREV_START_NODE_COL) {
+            PREV_START_NODE_ROW = row
+            PREV_START_NODE_COL = col
+            setIsStartNode(true);//set the state variable
+            console.log("start node");
+        }
+        if (row === PREV_END_NODE_ROW && col === PREV_END_NODE_COL) {
+            PREV_END_NODE_ROW = row
+            PREV_END_NODE_COL = col
+            setIsEndNode(true);//set the state variable
+            console.log("end node");
+        }
+
+
         const newGrid = getNewGridWallToggled(mainGrid, row, col)
         setMainGrid(newGrid)
         setMouseIsPressed(true)
     }
 
     const handleMouseEnter = (row, col) => {
+        console.log("mouse enter");
+        //?
         if (!mouseIsPressed) return
+        if (isStartNode === true) {
+            getNewStartToggled(mainGrid, row, col)
+        }
+        if (isEndNode === true) {
+            getNewEndToggled(mainGrid, row, col)
+        }
+
         const newGrid = getNewGridWallToggled(mainGrid, row, col)
         setMainGrid(newGrid)
     }
@@ -71,6 +110,46 @@ const PathFinder = () => {
         newGrid[row][col] = newNode
         return newGrid
     }
+    // toggle the start when dragged
+    const getNewStartToggled = (grid, row, col) => {
+        const newGrid = grid.slice()
+        const node = newGrid[row][col]
+        //previous node
+        const prevNode = {
+            ...node,
+            isStart: false,
+        }
+        const newNode = {
+            ...node,
+            isWall: false,
+            isStart: true,
+        }
+        newGrid[PREV_START_NODE_ROW][PREV_START_NODE_COL] = prevNode;
+        newGrid[row][col] = newNode
+        PREV_START_NODE_ROW = row
+        PREV_START_NODE_COL = col
+        return newGrid
+    }
+
+    const getNewEndToggled = (grid, row, col) => {
+        const newGrid = grid.slice()
+        const node = newGrid[row][col]
+        //previous node
+        const prevNode = {
+            ...node,
+            isEnd: false,
+        }
+        const newNode = {
+            ...node,
+            isWall: false,
+            isEnd: true,
+        }
+        newGrid[PREV_END_NODE_ROW][PREV_END_NODE_COL] = prevNode;
+        newGrid[row][col] = newNode
+        PREV_END_NODE_ROW = row
+        PREV_END_NODE_COL = col
+        return newGrid
+    }
 
     useEffect(() => {
         setMainGrid(createInitialGrid())
@@ -80,17 +159,17 @@ const PathFinder = () => {
         setMainGrid(createInitialGrid())
         const nodes = document.getElementsByClassName("node");
         for (let i = 0; i < nodes.length; i++) {
-            nodes[i].style.backgroundColor = '#20232F'
+            nodes[i].classList.remove("node-visited")
+            nodes[i].classList.remove("node-shortest-path")
         }
-        console.log(nodes);
     }
     const animateShortestPath = (nodesInShortestPathOrder) => {
-
+        console.log("animated");
         for (let i = 0; i < nodesInShortestPathOrder.length; i++) {
 
             setTimeout(() => {
                 const { row, col } = nodesInShortestPathOrder[i]
-                document.getElementById(`node-${row}-${col}`).className = 'node node-shortest-path'
+                document.getElementById(`node-${row}-${col}`).classList.add('node-shortest-path')
 
             }, i * 100)
         }
@@ -107,18 +186,28 @@ const PathFinder = () => {
 
             setTimeout(() => {
                 const { row, col } = visitedNodesInOrder[i]
-                document.getElementById(`node-${row}-${col}`).className = 'node node-visited'
+                document.getElementById(`node-${row}-${col}`).classList.add('node-visited')
             }, i * 20)
 
         }
     }
 
-    const visualizeDijkstra = () => {
+    const getAnimateArray = (algorithm) => {
+        const startNode = mainGrid[PREV_START_NODE_ROW][PREV_START_NODE_COL]
+        const endNode = mainGrid[PREV_END_NODE_ROW][PREV_END_NODE_COL]
+        var visitedNodesInOrder, success;
 
-        const startNode = mainGrid[START_NODE_ROW][START_NODE_COL]
-        const endNode = mainGrid[END_NODE_ROW][END_NODE_COL]
-        const { visitedNodesInOrder, success } = dijkstra(mainGrid, startNode, endNode)
+        if (algorithm === 'dijkstra')
+            // object destructuring and store in already defined variables
+            ({ visitedNodesInOrder, success } = dijkstra(mainGrid, startNode, endNode))
+        else if (algorithm === 'aStar')
+            ({ visitedNodesInOrder, success } = aStar(mainGrid, startNode, endNode))
+        else if (algorithm === 'BFS')
+            ({ visitedNodesInOrder, success } = bfs(mainGrid, startNode, endNode))
+        else if (algorithm === 'DFS')
+            ({ visitedNodesInOrder, success } = dfs(mainGrid, startNode, endNode))
 
+        console.log(visitedNodesInOrder, success);
         var nodesInShortestPathOrder;
         if (success) {
             nodesInShortestPathOrder = getNodesInShortestPathOrder(endNode)
@@ -127,23 +216,47 @@ const PathFinder = () => {
         animateTraversal(visitedNodesInOrder, nodesInShortestPathOrder)
     }
 
+    const pathFinder_variants = {
+        hidden: {
+            opacity: 0
+        },
+        visible: {
+            opacity: 1,
+            transition: {
+                delay: 0.2, duration: 0.6,
+            }
+        },
+        exit: {
+            opacity: 0,
+            transition: {
+                ease: 'easeInOut'
+            }
+        }
+    }
+
 
     return (
-        <div className="pathFinder">
+        <motion.div className="pathFinder"
+            variants={pathFinder_variants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+
+        >
             <div className="pathFinder__navbar">
                 <div className="util__buttons">
-                    <button onClick={() => resetGrid()}>Reset Grid</button>
+                    <button onClick={() => resetGrid()}>Clear Board</button>
                     <button>Start Timer</button>
                 </div>
                 <div className="pathFinder__types">
-                    <button onClick={() => visualizeDijkstra()}>Dijkstra </button>
-                    <button>A-star</button>
-                    <button>DFS</button>
-                    <button>BFS</button>
+                    <button onClick={() => getAnimateArray('dijkstra')}>Dijkstra </button>
+                    <button onClick={() => getAnimateArray('aStar')}> A-star</button>
+                    <button onClick={() => getAnimateArray('BFS')}>DFS</button>
+                    <button onClick={() => getAnimateArray('DFS')}>BFS</button>
                 </div>
-
             </div>
             <div className="pathFinder__container">
+
                 <div className="pathFinder__grid">
                     {
                         mainGrid.map(
@@ -158,11 +271,9 @@ const PathFinder = () => {
                         )
                     }
                 </div>
-                <div className="pathFinder__articles">
-                    do something
-                </div>
+                <h5 className="alert">** This part is in development stage|| Buggy project :(</h5>
             </div>
-        </div>
+        </motion.div>
     );
 };
 

@@ -7,13 +7,32 @@
 }
 
 .node-start {
-    background-color: aqua;
+    position: relative;
+}
+
+.node-start:before {
+    position: absolute;
+    font-family: 'FontAwesome';
+    top: 3px;
+    left: 4px;
+    content: "\f207";
+    font-size: 23px;
+    color: var(--violet);
 }
 
 .node-end {
-    background-color: red;
+    position: relative;
 }
 
+.node-end:before {
+    position: absolute;
+    font-family: 'FontAwesome';
+    top: 3px;
+    left: 4px;
+    content: "\f11e";
+    font-size: 23px;
+    color: var(--pink);
+}
 
 .node-wall {
     animation-name: wallAnimation;
@@ -29,17 +48,17 @@
 @keyframes wallAnimation {
     0% {
         transform: scale(.3);
-        background-color: rgb(12, 53, 71);
+        background-color: var(--pink);
     }
 
     50% {
         transform: scale(1.2);
-        background-color: rgb(12, 53, 71);
+        background-color: var(--pink);
     }
 
     100% {
         transform: scale(1.0);
-        background-color: rgb(12, 53, 71);
+        background-color: var(--pink);
     }
 }
 
@@ -57,22 +76,24 @@
 @keyframes visitedAnimation {
     0% {
         transform: scale(0.3);
-        background-color: rgba(0, 0, 66, 0.75);
+        background-color: rgba(221, 67, 46, 0.75);
         border-radius: 100%;
     }
 
     50% {
-        background-color: rgba(17, 104, 217, 0.75);
+        background-color: rgba(25, 173, 231, 0.75);
     }
 
     75% {
         transform: scale(1.2);
-        background-color: rgba(0, 217, 159, 0.75);
+        background-color: var(--violet);
     }
 
     100% {
         transform: scale(1);
-        background-color: rgba(0, 190, 218, 0.75);
+        background-color: rgba(25, 173, 231, 0.75);
+
+
     }
 }
 

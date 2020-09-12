@@ -21,7 +21,8 @@ const Sidebar = () => {
                     </li>
                 </Link>
 
-                <li><i class="fa fa-rocket"></i></li>
+                <li><i class="fa fa-rocket"></i>
+                </li>
 
             </ul>
 
