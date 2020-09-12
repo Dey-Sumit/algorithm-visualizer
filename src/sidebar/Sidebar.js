@@ -26,10 +26,11 @@ const Sidebar = () => {
                 </li>
 
             </ul>
-
-            <div className="sidebar__social">
-                <i class="fab fa-github-alt"></i>
-            </div>
+            <a href="https://github.com/Dey-Sumit/algorithm-visualizer" target="_blank" rel="noopener noreferrer">
+                <div className="sidebar__social">
+                    <i class="fab fa-github-alt"></i>
+                </div>
+            </a>
         </div>
     );
 };
