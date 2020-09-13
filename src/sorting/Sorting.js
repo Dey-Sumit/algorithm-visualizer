@@ -5,12 +5,11 @@ import { mergeSort_util } from './sorting-algos/merge_sort';
 import { bubbleSort_util } from './sorting-algos/bubble_sort';
 import { quickSort_util } from './sorting-algos/quickSort';
 import { insertionSort_util } from './sorting-algos/insertionSort';
-
+import useWindowSize from '../hooks/windowResize';
+import { toast } from 'react-toastify'
 // Change this value for the speed of the animations.
 const ANIMATION_SPEED_MS = 100;
 
-// Change this value for the number of bars (value) in the array.
-const DEFAULT_SIZE = 50;
 
 // This is the main color of the array bars.
 const PRIMARY_COLOR = 'yellow';
@@ -20,16 +19,38 @@ const SECONDARY_COLOR = 'green';
 
 
 
-
+toast.configure()
 const Sorting = () => {
     const [array, setArray] = useState('')
-    const [arraySize, setArraySize] = useState(DEFAULT_SIZE)
+    const [arraySize, setArraySize] = useState(30)
     //const [active, setActive] = useState('');
+    const [maxSize, setMaxSize] = useState(null)
+    const [notified, setNotified] = useState(false)
     var timer;
 
     useEffect(() => {
+        if (window.innerWidth < 500 && !notified) {
+            toast.warn('Seems like you are using this app in mobile :( Open this app in large screen to get the best experience :)',
+                { autoClose: false })
+            setNotified(true)
+        }
         resetArray(arraySize)
-    }, [arraySize])
+    }, [arraySize, maxSize])
+    const [width] = useWindowSize()
+    if (width < 500 && maxSize !== 35) {
+        setArraySize(20)
+        setMaxSize(35)
+    }
+    else if (width >= 500 && width <= 1024 && maxSize !== 50) {
+        setArraySize(30)
+        setMaxSize(50)
+
+    }
+    else if (width > 1024 && maxSize !== 70) {
+        setArraySize(50)
+        setMaxSize(70)
+    }
+
 
     const resetArray = arraySize => {
         //?
@@ -136,7 +157,7 @@ const Sorting = () => {
         >
             <div className="sorting__navbar">
                 <div className="util__buttons">
-                    <button onClick={() => resetArray(DEFAULT_SIZE)}>Reset </button>
+                    <button onClick={() => resetArray(arraySize)}>Reset </button>
                     <button>Start Timer</button>
                 </div>
                 <div className="sorting-types__buttons">
@@ -147,7 +168,7 @@ const Sorting = () => {
                     <button>Selection Sort</button>
                     <button>Heap Sort</button>
                 </div>
-                <input type="range" min="30" max="70" step="1"
+                <input type="range" min="30" max={maxSize} step="1"
                     value={arraySize}
                     onChange={(e) => {
                         setArraySize(e.target.value)

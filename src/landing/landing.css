@@ -10,11 +10,12 @@
 }
 
 .landing .row {
+    align-items: center;
     padding: 2%;
 }
 
 .landing__image {
-    width: 110%;
+    width: 120%;
 }
 
 .landing__left {

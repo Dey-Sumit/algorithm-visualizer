@@ -21,7 +21,7 @@
 .sidebar>ul {
     list-style: none;
     display: flex;
-    flex: 0.6;
+    flex: 0.2;
     flex-direction: column;
     height: 150px;
     justify-content: space-between;
@@ -85,6 +85,7 @@ i {
         height: 85px;
         width: 20%;
         align-items: center;
+        flex: 0.6;
     }
 
 }

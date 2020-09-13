@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import Node from './node/Node';
 import './pathFinder.css'
 import { getNodesInShortestPathOrder, dijkstra } from './pathFinder-algos/dijkstra';
@@ -6,9 +6,10 @@ import { aStar } from './pathFinder-algos/aStar';
 import { bfs } from './pathFinder-algos/bfs';
 import { dfs } from './pathFinder-algos/dfs';
 import { motion } from 'framer-motion'
-// import useWindowSize from '../hooks/windowResize';
+import useWindowSize from '../hooks/windowResize';
+import { toast } from 'react-toastify';
 
-var ROWS = 15;
+var ROWS = 13;
 // var COLS = 25;
 
 var CURRENT_START_NODE_ROW = 10;
@@ -24,9 +25,10 @@ const PathFinder = () => {
     const [isStartNode, setIsStartNode] = useState(false);
     const [isEndNode, setIsEndNode] = useState(false);
     //TODO different cols for different screen
-    const [COLS, SET_COLS] = useState(25);
+    const [COLS, SET_COLS] = useState(15);
     const [alreadyRan, setAlreadyRan] = useState(false); // false if the algo is running first time
     // else if the algorithm is already ran ; set it true and remove all the node's distance
+    const [notified, setNotified] = useState(false)
 
     const createNode = (row, col) => {
         return {
@@ -59,31 +61,24 @@ const PathFinder = () => {
 
     //component did mount
     useEffect(() => {
+        if (window.innerWidth < 500 && !notified) {
+            toast.warn('Seems like you are using this app in mobile :( Open this app in large screen to get the best experience :)',
+                { autoClose: false })
+        }
+        setNotified(true)
         setMainGrid(createInitialGrid())
-    }, [])
+    }, [COLS])
+    const [width] = useWindowSize()
+    if (width < 500 && COLS !== 15) {
+        SET_COLS(15)
+    }
+    else if (width >= 500 && width <= 1024 && COLS !== 20) {
+        SET_COLS(20)
+    }
+    else if (width > 1024 && COLS !== 25) {
+        SET_COLS(25)
+    }
 
-    // const [width] = useWindowSize();
-    // if (width < 370) {
-    //     if (COLS !== 15) {
-    //         console.log("small");
-    //         SET_COLS(15)
-    //         //setMainGrid(createInitialGrid())
-    //     }
-    // }
-    // else if (width >= 370 && width <= 1024) {
-    //     if (COLS !== 25) {
-    //         console.log("mid");
-    //         SET_COLS(25)
-    //         // setMainGrid(createInitialGrid())
-    //     }
-    // } else if (width > 1024) {
-    //     if (COLS !== 30) {
-    //         console.log("large");
-    //         SET_COLS(30)
-    //         //setMainGrid(createInitialGrid())
-
-    //     }
-    // }
 
 
     //! MOUSE DOWN -> MOUSE ENTER -> MOUSE UP
@@ -142,12 +137,12 @@ const PathFinder = () => {
     }
     // toggle the start when dragged
     const getNewStart = (grid, row, col) => {
-        console.log("inside new start function");
+
         const newGrid = grid.slice()
         const new_node = newGrid[row][col]
         const prev_node = newGrid[CURRENT_START_NODE_ROW][CURRENT_START_NODE_COL]
         //previous node
-        console.log("Before Update", new_node, prev_node);
+
         const prevNode = {
             ...prev_node,
             isStart: false
@@ -159,7 +154,7 @@ const PathFinder = () => {
         }
         newGrid[CURRENT_START_NODE_ROW][CURRENT_START_NODE_COL] = prevNode;
         newGrid[row][col] = newNode
-        console.log("After Update", new_node, prev_node);
+
 
         // update previous variables with current row and current col
 
@@ -225,7 +220,7 @@ const PathFinder = () => {
 
     }
     const animateShortestPath = (nodesInShortestPathOrder) => {
-        console.log("animated");
+
         for (let i = 0; i < nodesInShortestPathOrder.length; i++) {
 
             setTimeout(() => {
@@ -330,7 +325,7 @@ const PathFinder = () => {
             }
         }
     }
-    console.log("re-render");
+
     return (
         <motion.div className="pathFinder"
             variants={pathFinder_variants}
@@ -366,7 +361,29 @@ const PathFinder = () => {
                         )
                     }
                 </div>
-                <h6 className="alert_c">** This part is in development stage|| Buggy project :(</h6>
+                <div className="indicators">
+                    <div className="start">
+                        <i class="fas fa-car mr-2"></i>
+                        <strong>Start</strong>
+                    </div>
+                    <div className="end">
+                        <i class="fas fa-flag-checkered mr-2"></i>
+                        <strong>End</strong>
+                    </div>
+
+                    <div className="wall">
+                        <div className="wall__icon"></div>
+                        <strong>Wall</strong>
+                    </div>
+                    <div className="shortestPath">
+                        <div className="path__icon"></div>
+                        <strong>Shortest Path</strong>
+                    </div>
+                    <div className="visited">
+                        <div className="visited__icon"></div>
+                        <strong>Visited Node</strong>
+                    </div>
+                </div>
             </div>
         </motion.div>
     );

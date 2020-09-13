@@ -23,9 +23,9 @@ function App() {
           <Route path="/path-finder">
             <PathFinder />
           </Route>
-          {/* <Route path="/algorithm-art">
+          <Route path="/algorithm-art">
             <P5page />
-          </Route> */}
+          </Route>
           <Route exact path="/">
             <Landing />
           </Route>

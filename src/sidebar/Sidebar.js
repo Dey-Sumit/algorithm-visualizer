@@ -20,10 +20,10 @@ const Sidebar = () => {
                         <i class="fa fa-search-location"></i>
                     </li>
                 </Link>
-                {/* <Link to="/algorithm-art"> */}
+                <Link to="/algorithm-art">
 
-                <i class="fa fa-rocket"></i>
-                {/* </Link> */}
+                    <i class="fa fa-rocket"></i>
+                </Link>
 
             </ul>
 

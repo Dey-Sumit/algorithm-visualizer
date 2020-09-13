@@ -8,7 +8,7 @@
 .pathFinder__grid {
     background-color: transparent;
     padding: 20px 0px;
-    height: 460px;
+    height: 420px;
     margin: 10px auto;
     text-align: center;
 }
@@ -32,3 +32,37 @@
 .pathFinder__types>button {
     color: var(--green);
 }
+
+.indicators {
+    display: flex;
+    box-shadow: -1px -1px 3px rgba(255, 255, 255, 0.1),
+        1px 1px 3px rgba(0, 0, 0, 0.8);
+    width: 90%;
+    justify-content: space-around;
+    margin: 4% auto;
+    padding: 1%;
+}
+
+.wall__icon {
+    height: 30px;
+    width: 30px;
+    background-color: var(--pink);
+}
+
+.path__icon {
+    height: 30px;
+    width: 30px;
+    background-color: rgb(255, 254, 106);
+}
+
+.visited__icon {
+    height: 30px;
+    width: 30px;
+    background-color: rgba(25, 173, 231, 0.75);
+}
+
+.start>i {
+    color: var(--violet);
+}
+
+.end>i {}

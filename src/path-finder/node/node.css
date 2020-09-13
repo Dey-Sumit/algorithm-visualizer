@@ -14,8 +14,8 @@
     position: absolute;
     font-family: 'FontAwesome';
     top: 0px;
-    left: 4px;
-    content: "\f207";
+    left: 3px;
+    content: "\f1b9";
     font-size: 23px;
     color: var(--violet);
 }
@@ -28,10 +28,10 @@
     position: absolute;
     font-family: 'FontAwesome';
     top: 0px;
-    left: 4px;
+    left: 3px;
     content: "\f11e";
     font-size: 23px;
-    color: var(--pink);
+    /* color: var(--pink); */
 }
 
 .node-wall {
