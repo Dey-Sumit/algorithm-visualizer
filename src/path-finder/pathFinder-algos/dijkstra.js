@@ -1,35 +1,36 @@
 export const dijkstra = (grid, startNode, endNode) => {
-    console.log(startNode, endNode);
     if (startNode === endNode)
         return false
 
     // create visitedNodesInOrder array to keep track and animate
     const visitedNodesInOrder = []
 
+    // get all the unvisited nodes
+    var unvisitedNodes = getAllNodes(grid)
     // set startNode distance 0
     startNode.distance = 0
-
-    // get all the unvisited nodes
-    const unvisitedNodes = getAllNodes(grid)
+    //TODO
 
     while (unvisitedNodes.length) {
-        // sort unvisited ascending order
+        // sort unvisited ascending order and get the first value(shift())
         sortNodesByDistance(unvisitedNodes)
+        const closestNode = unvisitedNodes.shift();
 
-        const closestNode = unvisitedNodes.shift()
-        if (closestNode.distance === Infinity) return { visitedNodesInOrder, success: false };
+        if (closestNode.distance === Infinity)
+            return { visitedNodesInOrder, success: false }
+
         // set closest node as visited and push it to visited nodes in order
         closestNode.isVisited = true
         visitedNodesInOrder.push(closestNode)
 
-        if (closestNode === endNode) {
-
+        if (closestNode === endNode)
             return { visitedNodesInOrder, success: true }
-        }
 
         // update unvisited neighbors
         updateUnvisitedNeighbors(closestNode, grid)
     }
+    //TODO do something when failed :(
+    console.log("Failed :(");
 }
 
 const getAllNodes = (grid) => {
@@ -40,20 +41,21 @@ const getAllNodes = (grid) => {
     return nodes
 }
 
-const sortNodesByDistance = (unvisitedNodes) =>
-    unvisitedNodes.sort((nodeA, nodeB) => nodeA.distance - nodeB.distance)
+const sortNodesByDistance = (unvisitedNodes) => {
 
+    unvisitedNodes.sort((nodeA, nodeB) => {
+        return nodeA.distance - nodeB.distance
+    })
+}
 const updateUnvisitedNeighbors = (node, grid) => {
     // get unvisited neighbors
     const unvisitedNeighbors = getUnvisitedNeighbors(node, grid)
-    //console.log(unvisitedNeighbors);
     for (const neighbor of unvisitedNeighbors) {
         // increment every neighbor's distance by 1
         neighbor.distance = node.distance + 1
         // set neighbor's prev node  = current node
         neighbor.previousNode = node
     }
-
 }
 
 const getUnvisitedNeighbors = (node, grid) => {
@@ -73,5 +75,6 @@ export const getNodesInShortestPathOrder = (endNode) => {
         nodesInShortestPathOrder.unshift(currentNode)
         currentNode = currentNode.previousNode
     }
+    // console.log(nodesInShortestPathOrder);
     return nodesInShortestPathOrder
 }

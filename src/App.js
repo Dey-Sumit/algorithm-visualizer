@@ -7,6 +7,7 @@ import Sorting from './sorting/Sorting';
 import PathFinder from './path-finder/PathFinder';
 import Articles from './articles/Articles';
 import { AnimatePresence } from 'framer-motion';
+import P5page from './p5js/P5page';
 
 function App() {
   const location = useLocation();
@@ -16,12 +17,15 @@ function App() {
       <Sidebar />
       <AnimatePresence exitBeforeEnter>
         <Switch location={location} key={location.key}>
-          <Route exact path="/sorting">
+          <Route path="/sorting">
             <Sorting />
           </Route>
-          <Route exact path="/path-finder">
+          <Route path="/path-finder">
             <PathFinder />
           </Route>
+          {/* <Route path="/algorithm-art">
+            <P5page />
+          </Route> */}
           <Route exact path="/">
             <Landing />
           </Route>

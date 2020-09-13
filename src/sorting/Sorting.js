@@ -3,6 +3,8 @@ import { motion } from 'framer-motion'
 import './sorting.css'
 import { mergeSort_util } from './sorting-algos/merge_sort';
 import { bubbleSort_util } from './sorting-algos/bubble_sort';
+import { quickSort_util } from './sorting-algos/quickSort';
+import { insertionSort_util } from './sorting-algos/insertionSort';
 
 // Change this value for the speed of the animations.
 const ANIMATION_SPEED_MS = 100;
@@ -30,9 +32,11 @@ const Sorting = () => {
     }, [arraySize])
 
     const resetArray = arraySize => {
+        //?
         while (timer--) {
             window.clearTimeout(timer); // will do nothing if no timeout with id is present
         }
+        clearTimeout(timer)
         const arrayBars = document.getElementsByClassName('array-bar')
         for (let i = 0; i < arrayBars.length; i++)
             arrayBars[i].style.backgroundColor = '#D56031'
@@ -69,8 +73,7 @@ const Sorting = () => {
 
         }
     }
-    const bubbleSort_animation = () => {
-        const animations = bubbleSort_util(array)
+    const sort_animation = (animations) => {
         const arrayBars = document.getElementsByClassName('array-bar')
         for (var i = 0; i < animations.length; i++) {
             const [barOneIndex, barTwoIndex] = animations[i]
@@ -91,9 +94,20 @@ const Sorting = () => {
 
             }, i * ANIMATION_SPEED_MS)
         }
-
-
     }
+    const bubbleSort_animation = () => {
+        const animations = bubbleSort_util(array)
+        sort_animation(animations);
+    }
+    const quickSort_animation = () => {
+        const animations = quickSort_util(array)
+        sort_animation(animations);
+    }
+    const insertionSort_animation = () => {
+        const animations = insertionSort_util(array);
+        sort_animation(animations);
+    }
+
     const sorting_variants = {
         hidden: {
             opacity: 0
@@ -128,8 +142,8 @@ const Sorting = () => {
                 <div className="sorting-types__buttons">
                     <button onClick={() => bubbleSort_animation()}>Bubble Sort</button>
                     <button onClick={() => mergeSort_animation()}>Merge Sort</button>
-                    <button>Quick Sort</button>
-                    <button>Insertion Sort</button>
+                    <button onClick={() => quickSort_animation()}>Quick Sort</button>
+                    <button onClick={() => insertionSort_animation()}>Insertion Sort</button>
                     <button>Selection Sort</button>
                     <button>Heap Sort</button>
                 </div>

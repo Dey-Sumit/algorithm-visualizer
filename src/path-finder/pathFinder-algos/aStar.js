@@ -17,9 +17,8 @@ export const aStar = (grid, startNode, endNode) => {
         // get minimum lowest f node from openSet
         let current = openSet.sort((a, b) => a.f - b.f)[0]
         if (current.row === endNode.row && current.col === endNode.col) {
-            console.log(current.previousNode, endNode.previousNode);
+            //     console.log(current.previousNode, endNode.previousNode);
             // const solution = getNodesInShortestPathOrder(current)
-
             return { visitedNodesInOrder, success: true }
         }
         visitedNodesInOrder.push(current);

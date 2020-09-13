@@ -1,5 +1,6 @@
 import { getUnvisitedNeighbors } from "./util_functions";
-
+//? might be wrong
+// TODO check dfs algorithm if it is correct
 export const dfs = (grid, startNode, endNode) => {
 
     // create visitedNodesInOrder array to keep track and animate
@@ -10,6 +11,7 @@ export const dfs = (grid, startNode, endNode) => {
 
     while (stack.length > 0) {
         const current = stack.pop();
+        console.log(current);
         current.isVisited = true
         visitedNodesInOrder.push(current)
 
