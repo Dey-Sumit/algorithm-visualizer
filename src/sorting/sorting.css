@@ -56,7 +56,8 @@
 .arraySize-slider {
     appearance: none;
     height: 7px;
-    width: 400px;
+    width: 30%;
+    min-width: 300px;
     margin-left: 10px;
 
     background: var(--orange);

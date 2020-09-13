@@ -6,15 +6,18 @@ import { aStar } from './pathFinder-algos/aStar';
 import { bfs } from './pathFinder-algos/bfs';
 import { dfs } from './pathFinder-algos/dfs';
 import { motion } from 'framer-motion'
-const ROWS = 12
-const COLS = 12
+import useWindowSize from '../hooks/windowResize';
+
+var ROWS = 15;
+// var COLS = 25;
+
 var START_NODE_ROW = 2
 var START_NODE_COL = 10
 var END_NODE_ROW = 7
 var END_NODE_COL = 2
 
 var PREV_START_NODE_ROW = 2;
-var PREV_START_NODE_COL = 14;
+var PREV_START_NODE_COL = 10;
 var PREV_END_NODE_ROW = 7;
 var PREV_END_NODE_COL = 2;
 
@@ -25,6 +28,9 @@ const PathFinder = () => {
     const [mouseIsPressed, setMouseIsPressed] = useState(false)
     const [isStartNode, setIsStartNode] = useState(false);
     const [isEndNode, setIsEndNode] = useState(false);
+    const [COLS, SET_COLS] = useState(25);
+    //var COLS = 30;
+    // var layout; // large,mid
     const createNode = (row, col) => {
         return {
             row,
@@ -42,9 +48,8 @@ const PathFinder = () => {
         }
     }
 
-
     const createInitialGrid = () => {
-
+        console.log("initial grid :", COLS);
         var temp_grid = []
         for (let row = 0; row < ROWS; row++) {
             var currentRow = []
@@ -55,6 +60,34 @@ const PathFinder = () => {
         }
         return temp_grid
     }
+
+    useEffect(() => {
+        setMainGrid(createInitialGrid())
+    }, [])
+
+    // const [width] = useWindowSize();
+    // if (width < 370) {
+    //     if (COLS !== 15) {
+    //         console.log("small");
+    //         SET_COLS(15)
+    //         //setMainGrid(createInitialGrid())
+    //     }
+    // }
+    // else if (width >= 370 && width <= 1024) {
+    //     if (COLS !== 25) {
+    //         console.log("mid");
+    //         SET_COLS(25)
+    //         // setMainGrid(createInitialGrid())
+    //     }
+    // } else if (width > 1024) {
+    //     if (COLS !== 30) {
+    //         console.log("large");
+    //         SET_COLS(30)
+    //         //setMainGrid(createInitialGrid())
+
+    //     }
+    // }
+
 
     const handleMouseUp = () => {
         console.log("mouseup");
@@ -151,9 +184,7 @@ const PathFinder = () => {
         return newGrid
     }
 
-    useEffect(() => {
-        setMainGrid(createInitialGrid())
-    }, [setMainGrid])
+
 
     const resetGrid = () => {
         setMainGrid(createInitialGrid())
@@ -207,7 +238,7 @@ const PathFinder = () => {
         else if (algorithm === 'DFS')
             ({ visitedNodesInOrder, success } = dfs(mainGrid, startNode, endNode))
 
-        console.log(visitedNodesInOrder, success);
+        //console.log(visitedNodesInOrder, success);
         var nodesInShortestPathOrder;
         if (success) {
             nodesInShortestPathOrder = getNodesInShortestPathOrder(endNode)
@@ -233,8 +264,7 @@ const PathFinder = () => {
             }
         }
     }
-
-
+    console.log("rerender");
     return (
         <motion.div className="pathFinder"
             variants={pathFinder_variants}
@@ -251,8 +281,8 @@ const PathFinder = () => {
                 <div className="pathFinder__types">
                     <button onClick={() => getAnimateArray('dijkstra')}>Dijkstra </button>
                     <button onClick={() => getAnimateArray('aStar')}> A-star</button>
-                    <button onClick={() => getAnimateArray('BFS')}>DFS</button>
-                    <button onClick={() => getAnimateArray('DFS')}>BFS</button>
+                    <button onClick={() => getAnimateArray('DFS')}>DFS</button>
+                    <button onClick={() => getAnimateArray('BFS')}>BFS</button>
                 </div>
             </div>
             <div className="pathFinder__container">
@@ -271,7 +301,7 @@ const PathFinder = () => {
                         )
                     }
                 </div>
-                <h5 className="alert">** This part is in development stage|| Buggy project :(</h5>
+                <h6 className="alert_c">** This part is in development stage|| Buggy project :(</h6>
             </div>
         </motion.div>
     );

@@ -1,4 +1,83 @@
+@import url('https://fonts.googleapis.com/css2?family=Markazi+Text:wght@400;600;700&display=swap');
+
 .landing {
     flex: 1;
-    padding: 0% 2%;
+    padding: 3%;
+    display: grid;
+    place-items: center;
+    font-family: 'Markazi Text', serif;
+    line-height: 50px;
+}
+
+.landing .row {
+    padding: 2%;
+}
+
+.landing__image {
+    width: 110%;
+}
+
+.landing__left {
+    padding: 2%;
+}
+
+.landing__right {}
+
+.landing__text {
+    font-size: 2.2rem;
+
+}
+
+.landing__text-top {
+    font-size: 1.3rem;
+    letter-spacing: 0.5px;
+    /* color: var(--green); */
+    color: #d0b53f;
+}
+
+.landing__text-title {
+    font-size: 3rem;
+    font-weight: 600;
+    /* color: var(--pink); */
+    color: #d0373a;
+}
+
+.landing__buttons {
+    display: flex;
+    margin-top: 8%;
+    text-align: center;
+}
+
+.landing a {
+    flex: auto;
+    margin-right: 2%;
+}
+
+.landing button {
+    font-size: 1.3rem;
+    color: #fff;
+    font-weight: 700;
+    width: 100%;
+    height: 50px;
+    border-radius: 30px;
+    /* background-image: linear-gradient(to right bottom, var(--pink), var(--violet)); */
+    background-image: linear-gradient(to right bottom, #bd2629, #d4803b);
+}
+
+.landing__buttons-path {
+    background-image: linear-gradient(to right bottom, #d7bc48, #cf6726) !important;
+}
+
+.strikeout {
+    position: relative;
+}
+
+.strikeout::after {
+    border-bottom: 0.125em solid var(--violet);
+    content: "";
+    left: 0;
+    margin-top: calc(0.125em / 2 * -1);
+    position: absolute;
+    right: 0;
+    top: 55%;
 }

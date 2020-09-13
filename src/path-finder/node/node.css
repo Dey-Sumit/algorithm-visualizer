@@ -13,7 +13,7 @@
 .node-start:before {
     position: absolute;
     font-family: 'FontAwesome';
-    top: 3px;
+    top: 0px;
     left: 4px;
     content: "\f207";
     font-size: 23px;
@@ -27,7 +27,7 @@
 .node-end:before {
     position: absolute;
     font-family: 'FontAwesome';
-    top: 3px;
+    top: 0px;
     left: 4px;
     content: "\f11e";
     font-size: 23px;

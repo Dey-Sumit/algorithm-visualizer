@@ -26,12 +26,14 @@ const Sidebar = () => {
                 </li>
 
             </ul>
-            <a href="https://github.com/Dey-Sumit/algorithm-visualizer" target="_blank" rel="noopener noreferrer">
-                <div className="sidebar__social">
+
+            <div className="sidebar__social">
+                <a href="https://github.com/Dey-Sumit/algorithm-visualizer" target="_blank" rel="noopener noreferrer">
                     <i class="fab fa-github-alt"></i>
-                </div>
-            </a>
-        </div>
+                </a>
+            </div>
+
+        </div >
     );
 };
 

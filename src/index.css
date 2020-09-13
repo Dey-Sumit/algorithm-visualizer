@@ -17,6 +17,10 @@ a {
   color: inherit;
 }
 
+a:hover {
+  color: inherit;
+}
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
@@ -41,12 +45,17 @@ button {
   cursor: pointer;
   width: 18%;
   min-width: 130px;
+
 }
 
-.alert {
+button:focus {
+  outline: none;
+}
+
+.alert_c {
   background-color: var(--pink);
   padding: 1%;
-  margin: 1%;
+  margin: 3% 1%;
   border-radius: 5px;
 }
 

@@ -11,12 +11,21 @@
     box-shadow: -1px -1px 3px rgba(255, 255, 255, 0.1), 1px 1px 3px rgba(0, 0, 0, 0.8);
 }
 
+.home {
+    flex: 0.3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .sidebar>ul {
     list-style: none;
     display: flex;
+    flex: 0.6;
     flex-direction: column;
     height: 150px;
     justify-content: space-between;
+    margin-bottom: 0px !important;
 }
 
 .sidebar__link-active {
@@ -32,9 +41,18 @@ i {
     margin: 10px 0;
 }
 
+.sidebar__social {
+    flex: 0.3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .sidebar__social>i {
     border-radius: 10%;
     color: var(--white);
+    flex: 0.3;
+    text-align: center;
 }
 
 .fa-rocket {
@@ -47,6 +65,10 @@ i {
 
 .fa-search-location {
     color: var(--green);
+}
+
+.fa-github-alt {
+    color: var(--white);
 }
 
 @media (max-width:1160px) {

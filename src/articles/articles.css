@@ -1,5 +1,5 @@
 .articles {
     flex: 0.2;
     box-shadow: -1px -1px 3px rgba(255, 255, 255, 0.1), 1px 1px 3px rgba(0, 0, 0, 0.8);
-    padding: 2%;
+    padding: 1%;
 }
