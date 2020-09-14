@@ -8,6 +8,7 @@ import { dfs } from './pathFinder-algos/dfs';
 import { motion } from 'framer-motion'
 import useWindowSize from '../hooks/windowResize';
 import { toast } from 'react-toastify';
+import { variants } from '../framer motion/variants';
 
 var ROWS = 13;
 // var COLS = 25;
@@ -239,12 +240,16 @@ const PathFinder = () => {
                         animateShortestPath(nodesInShortestPathOrder)
                 }
             }, i * 20)
-
             setTimeout(() => {
                 const { row, col } = visitedNodesInOrder[i]
                 document.getElementById(`node-${row}-${col}`).classList.add('node-visited')
             }, i * 20)
 
+        }
+        if (!nodesInShortestPathOrder) {
+            toast.info('No path found 🐹', {
+                position: 'top-center'
+            })
         }
     }
     //TODO Re Re Re Re Re ................... rename the functions :(
@@ -302,33 +307,16 @@ const PathFinder = () => {
 
         //console.log(visitedNodesInOrder, success);
         var nodesInShortestPathOrder;
+
         if (success) {
             nodesInShortestPathOrder = getNodesInShortestPathOrder(endNode)
         }
         animateTraversal(visitedNodesInOrder, nodesInShortestPathOrder)
     }
 
-    const pathFinder_variants = {
-        hidden: {
-            opacity: 0
-        },
-        visible: {
-            opacity: 1,
-            transition: {
-                delay: 0.2, duration: 0.6,
-            }
-        },
-        exit: {
-            opacity: 0,
-            transition: {
-                ease: 'easeInOut'
-            }
-        }
-    }
-
     return (
         <motion.div className="pathFinder"
-            variants={pathFinder_variants}
+            variants={variants}
             initial="hidden"
             animate="visible"
             exit="exit"
@@ -336,7 +324,11 @@ const PathFinder = () => {
             <div className="pathFinder__navbar">
                 <div className="util__buttons">
                     <button onClick={() => resetGrid()}>Clear Board</button>
-                    <button>Start Timer</button>
+                    <button onClick={() => toast.dark('⛔ Not implemented yet', {
+                        position: 'top-center',
+                        closeButton: false,
+                        autoClose: 3000
+                    })}>Start Timer</button>
                 </div>
                 <div className="pathFinder__types">
                     <button onClick={() => getAnimateArray('dijkstra')}>Dijkstra </button>
@@ -364,11 +356,11 @@ const PathFinder = () => {
                 <div className="indicators">
                     <div className="start">
                         <i class="fas fa-car mr-2"></i>
-                        <strong>Start</strong>
+                        <strong>Start Node</strong>
                     </div>
                     <div className="end">
                         <i class="fas fa-flag-checkered mr-2"></i>
-                        <strong>End</strong>
+                        <strong>End Node</strong>
                     </div>
 
                     <div className="wall">

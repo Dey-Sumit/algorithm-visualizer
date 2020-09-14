@@ -1,14 +1,21 @@
-.sidebar {
-    display: flex;
-    flex: 0.1;
-    flex-direction: column;
-    align-items: center;
-    height: 100vh;
-    justify-content: space-around;
-    font-size: 22px;
+.sidebar__wrapper {
     color: var(--orange);
     background: var(--dark);
     box-shadow: -1px -1px 3px rgba(255, 255, 255, 0.1), 1px 1px 3px rgba(0, 0, 0, 0.8);
+    flex: 0.1;
+    height: 100vh;
+    position: sticky;
+    left: 0;
+    top: 0;
+}
+
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    font-size: 22px;
+    height: 100%;
 }
 
 .home {
@@ -72,12 +79,14 @@ i {
 }
 
 @media (max-width:1160px) {
+    .sidebar__wrapper {
+        height: 100px;
+        z-index: 1;
+    }
+
     .sidebar {
         flex-direction: row;
         align-items: center;
-        position: sticky;
-        top: 0;
-        z-index: 1;
     }
 
     .sidebar>ul {

@@ -2,7 +2,7 @@
 
 .landing {
     flex: 1;
-    padding: 3%;
+    padding: 0 2%;
     display: grid;
     place-items: center;
     font-family: 'Markazi Text', serif;
@@ -11,11 +11,14 @@
 
 .landing .row {
     align-items: center;
-    padding: 2%;
+}
+
+.landing__first {
+    height: 100vh;
 }
 
 .landing__image {
-    width: 120%;
+    width: 100%;
 }
 
 .landing__left {
@@ -81,4 +84,14 @@
     position: absolute;
     right: 0;
     top: 55%;
+}
+
+.landing__buttons-portfolio {
+    background-image: linear-gradient(to right bottom, var(--pink), var(--violet), var(--green)) !important;
+    letter-spacing: 1px;
+
+}
+
+.landing__second-header {
+    font-size: 6rem !important;
 }

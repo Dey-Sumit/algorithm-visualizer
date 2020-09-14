@@ -2,34 +2,19 @@ import React from 'react';
 import './landing.css'
 import { motion } from 'framer-motion'
 import visualData from './../assets/15.png'
+import coder from './../assets/blogging 1.png'
 import { Col, Container, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { variants } from '../framer motion/variants';
 const Landing = () => {
-    const landing_variants = {
-        hidden: {
-            opacity: 0
-        },
-        visible: {
-            opacity: 1,
-            transition: {
-                delay: 0.2, duration: 0.6,
-            }
-        },
-        exit: {
-            opacity: 0,
-            transition: {
-                ease: 'easeInOut'
-            }
-        }
-    }
     return (
-        <motion.Container
+        <motion.div
             className="landing"
-            variants={landing_variants}
+            variants={variants}
             initial="hidden"
             animate="visible"
             exit="exit">
-            <Row>
+            <Row className="landing__first">
                 <Col xs={12} md={6} className="landing__left">
 
                     <div className="landing__text">
@@ -52,7 +37,23 @@ const Landing = () => {
                     <img src={visualData} alt="" className="landing__image" />
                 </Col>
             </Row>
-        </motion.Container>
+            <h1 className="landing__second-header">Who am I?</h1>
+            <Row className="landing__second">
+
+                <Col xs={12} md={6} className="landing__left">
+                    <img src={coder} alt="" className="landing__image" />
+
+                </Col>
+                <Col xs={12} md={6} className="landing__right">
+                    <a href="https://sumitdey.netlify.app/" target="_blank" rel="noopener noreferrer">
+                        <button className="landing__buttons-portfolio">
+
+                            Check out my portfolio here</button>
+                    </a>
+                </Col>
+            </Row>
+
+        </motion.div>
 
 
     );

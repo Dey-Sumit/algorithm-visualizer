@@ -1,26 +1,11 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './p5page.css'
 import { motion } from 'framer-motion'
-
+import Feedback from '../feedback/Feedback';
+import ReportsList from '../reports_list/ReportsList';
+import { variants } from '../framer motion/variants';
 
 const P5page = () => {
-    const variants = {
-        hidden: {
-            opacity: 0
-        },
-        visible: {
-            opacity: 1,
-            transition: {
-                delay: 0.2, duration: 0.6,
-            }
-        },
-        exit: {
-            opacity: 0,
-            transition: {
-                ease: 'easeInOut'
-            }
-        }
-    }
 
     return (
         <motion.div className="p5page"
@@ -40,7 +25,8 @@ const P5page = () => {
                 <h5>About me 👦 and this project</h5>
                 <h5>Populate Articles section with something more interesting 🚀</h5>
             </div>
-
+            <Feedback />
+            <ReportsList />
 
         </motion.div>
     );

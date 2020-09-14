@@ -7,6 +7,7 @@ import { quickSort_util } from './sorting-algos/quickSort';
 import { insertionSort_util } from './sorting-algos/insertionSort';
 import useWindowSize from '../hooks/windowResize';
 import { toast } from 'react-toastify'
+import { variants } from '../framer motion/variants';
 // Change this value for the speed of the animations.
 const ANIMATION_SPEED_MS = 100;
 
@@ -129,28 +130,9 @@ const Sorting = () => {
         sort_animation(animations);
     }
 
-    const sorting_variants = {
-        hidden: {
-            opacity: 0
-        },
-        visible: {
-            opacity: 1,
-            transition: {
-                delay: 0.2, duration: 0.6,
-            }
-        },
-        exit: {
-            opacity: 0,
-            transition: {
-                ease: 'easeInOut'
-            }
-        }
-    }
-
-
     return (
         <motion.div className="sorting"
-            variants={sorting_variants}
+            variants={variants}
             initial="hidden"
             animate="visible"
             exit="exit"
@@ -165,8 +147,6 @@ const Sorting = () => {
                     <button onClick={() => mergeSort_animation()}>Merge Sort</button>
                     <button onClick={() => quickSort_animation()}>Quick Sort</button>
                     <button onClick={() => insertionSort_animation()}>Insertion Sort</button>
-                    <button>Selection Sort</button>
-                    <button>Heap Sort</button>
                 </div>
                 <input type="range" min="30" max={maxSize} step="1"
                     value={arraySize}
