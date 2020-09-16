@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Node from './node/Node';
 import './pathFinder.css'
 import { getNodesInShortestPathOrder, dijkstra } from './pathFinder-algos/dijkstra';
@@ -13,10 +13,10 @@ import { variants } from '../framer motion/variants';
 var ROWS = 13;
 // var COLS = 25;
 
-var CURRENT_START_NODE_ROW = 10;
-var CURRENT_START_NODE_COL = 3;
-var CURRENT_END_NODE_ROW = 3;
-var CURRENT_END_NODE_COL = 10;
+var CURRENT_START_NODE_ROW = 0;
+var CURRENT_START_NODE_COL = 8;
+var CURRENT_END_NODE_ROW = 8;
+var CURRENT_END_NODE_COL = 0;
 
 
 const PathFinder = () => {
@@ -30,6 +30,12 @@ const PathFinder = () => {
     const [alreadyRan, setAlreadyRan] = useState(false); // false if the algo is running first time
     // else if the algorithm is already ran ; set it true and remove all the node's distance
     const [notified, setNotified] = useState(false)
+    // const [algoDone, setAlgoDone] = useState(false)
+    const [currentAlgo, setCurrentAlgo] = useState(null)
+
+    const [prevNodeIsWall, setPrevNodeIsWall] = useState(false);
+
+
 
     const createNode = (row, col) => {
         return {
@@ -108,8 +114,9 @@ const PathFinder = () => {
 
         if (!mouseIsPressed) return // return if mousePressed flag is not true (down first)
 
-        if (isStartNode === true)
+        if (isStartNode === true) {
             newGrid = getNewStart(mainGrid, row, col)
+        }
         else if (isEndNode === true)
             newGrid = getNewEnd(mainGrid, row, col)
         else
@@ -122,6 +129,11 @@ const PathFinder = () => {
     // when leave the mouse , reset the flags to false
     const handleMouseUp = () => {
         setMouseIsPressed(false)
+
+        if ((isStartNode || isEndNode) && alreadyRan) {
+            getAnimateArray(currentAlgo)
+        }
+
         setIsStartNode(false)
         setIsEndNode(false)
     }
@@ -142,12 +154,15 @@ const PathFinder = () => {
         const newGrid = grid.slice()
         const new_node = newGrid[row][col]
         const prev_node = newGrid[CURRENT_START_NODE_ROW][CURRENT_START_NODE_COL]
-        //previous node
 
         const prevNode = {
             ...prev_node,
-            isStart: false
+            isStart: false,
+            isWall: prevNodeIsWall
         }
+
+        setPrevNodeIsWall(new_node.isWall)
+
         const newNode = {
             ...new_node,
             isWall: false,
@@ -155,12 +170,14 @@ const PathFinder = () => {
         }
         newGrid[CURRENT_START_NODE_ROW][CURRENT_START_NODE_COL] = prevNode;
         newGrid[row][col] = newNode
+        //  console.log(newGrid);
 
 
         // update previous variables with current row and current col
 
         CURRENT_START_NODE_ROW = row
         CURRENT_START_NODE_COL = col
+
         return newGrid
     }
 
@@ -172,7 +189,10 @@ const PathFinder = () => {
         const prevNode = {
             ...prev_node,
             isEnd: false,
+            isWall: prevNodeIsWall
         }
+        setPrevNodeIsWall(new_node.isWall)
+
         const newNode = {
             ...new_node,
             isWall: false,
@@ -230,6 +250,7 @@ const PathFinder = () => {
 
             }, i * 100)
         }
+
     }
     const animateTraversal = (visitedNodesInOrder, nodesInShortestPathOrder = undefined) => {
         for (let i = 0; i < visitedNodesInOrder.length; i++) {
@@ -271,6 +292,7 @@ const PathFinder = () => {
             // object destructuring and store in already defined variables
             ({ visitedNodesInOrder, success } = dijkstra(mainGrid, startNode, endNode))
             setAlreadyRan(true);
+            setCurrentAlgo('dijkstra')
 
         }
         else if (algorithm === 'aStar') {
@@ -282,6 +304,8 @@ const PathFinder = () => {
 
             ({ visitedNodesInOrder, success } = aStar(mainGrid, startNode, endNode))
             setAlreadyRan(true);
+            setCurrentAlgo('aStar')
+
         }
         else if (algorithm === 'BFS') {
             if (alreadyRan) {
@@ -292,6 +316,8 @@ const PathFinder = () => {
 
             ({ visitedNodesInOrder, success } = bfs(mainGrid, startNode, endNode))
             setAlreadyRan(true);
+            setCurrentAlgo('BFS')
+
         }
 
         else if (algorithm === 'DFS') {
@@ -303,6 +329,8 @@ const PathFinder = () => {
 
             ({ visitedNodesInOrder, success } = dfs(mainGrid, startNode, endNode))
             setAlreadyRan(true);
+            setCurrentAlgo('DFS')
+
         }
 
         //console.log(visitedNodesInOrder, success);
@@ -331,10 +359,10 @@ const PathFinder = () => {
                     })}>Start Timer</button>
                 </div>
                 <div className="pathFinder__types">
-                    <button onClick={() => getAnimateArray('dijkstra')}>Dijkstra </button>
-                    <button onClick={() => getAnimateArray('aStar')}> A-star</button>
-                    <button onClick={() => getAnimateArray('DFS')}>DFS</button>
-                    <button onClick={() => getAnimateArray('BFS')}>BFS</button>
+                    <button className={currentAlgo === 'aStar' ? 'pathFinder__button-active' : null} onClick={() => getAnimateArray('aStar')}> A-star</button>
+                    <button className={currentAlgo === 'dijkstra' ? 'pathFinder__button-active' : null} onClick={() => getAnimateArray('dijkstra')}>Dijkstra </button>
+                    <button className={currentAlgo === 'DFS' ? 'pathFinder__button-active' : null} onClick={() => getAnimateArray('DFS')}>DFS</button>
+                    <button className={currentAlgo === 'BFS' ? 'pathFinder__button-active' : null} onClick={() => getAnimateArray('BFS')}>BFS</button>
                 </div>
             </div>
             <div className="pathFinder__container">

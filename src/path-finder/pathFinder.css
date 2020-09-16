@@ -58,11 +58,17 @@
 .visited__icon {
     height: 30px;
     width: 30px;
-    background-color: rgba(25, 173, 231, 0.75);
+    background-color: rgba(3, 80, 73, 0.815);
 }
 
 .start>i {
     color: var(--violet);
 }
 
-.end>i {}
+.end>i {
+    color: rgb(218, 39, 8);
+}
+
+.pathFinder__button-active {
+    border: 3px solid var(--green);
+}

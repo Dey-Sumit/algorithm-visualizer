@@ -73,3 +73,7 @@
     background: var(--orange);
     cursor: pointer;
 }
+
+.sorting__button-active {
+    border: 3px solid var(--orange)
+}
